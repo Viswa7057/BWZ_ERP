@@ -1,0 +1,162 @@
+<?php
+$loginUser = $_REQUEST['loginUser'];
+require_once("db_connect.php");
+$date = date('Y-m-d');
+if($loginUser != ''){
+
+//Total Completed sales
+ $stmt_Totaluser="SELECT count(id) as total_count from order_details where sales_person='$loginUser' AND status='Completed';";
+	                           $rslt_Totaluser= mysqli_query($conn,$stmt_Totaluser);
+	                           $row_Totaluser= mysqli_fetch_row($rslt_Totaluser);
+							   $Total_sales = $row_Totaluser[0];
+							   
+//Total New sales
+ $stmt_NEW_sale="SELECT count(id) as new_count from order_details where sales_person='$loginUser' AND status='NEW';";
+	                           $rslt_NewSale= mysqli_query($conn,$stmt_NEW_sale);
+	                           $row_NewSale= mysqli_fetch_row($rslt_NewSale);
+							   $Total_NewSale = $row_NewSale[0];
+							   
+//Total Rejected sales
+ $stmt_Reject_sale="SELECT count(id) as reject_count from order_details where sales_person='$loginUser' AND status='Rejected';";
+	                           $rslt_RejectSale= mysqli_query($conn,$stmt_Reject_sale);
+	                           $row_RejectSale= mysqli_fetch_row($rslt_RejectSale);
+							   $Total_RejectSale = $row_RejectSale[0];
+                               
+							   echo $Total_sales;
+							   echo "**".$Total_NewSale;
+							   echo "**".$Total_RejectSale;
+							   echo "**";
+							   
+							   ?>
+
+ <style>
+.dt-head-center {text-align: center;}
+.modal-content {
+width: 138%;
+}
+</style>			
+			 <table class="table m-0 tableFixHead" id="completed_sales">
+                    <thead>
+                    <tr>
+                     <th>Sr.No.</th>
+                      <th>Company Name</th>
+                      <th>Campaing Details</th>
+					  <th>Media Type</th> 					  
+					   <th>Total No of Vehicles</th> 
+					   <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody> 
+					<?php 
+						
+										
+						$stmt_select = "SELECT * from order_details where sales_person='$loginUser' AND status='Completed'";
+                        $rslt_rs = mysqli_query($conn, $stmt_select);
+
+                        $m = 1;
+                        while ($row = mysqli_fetch_assoc($rslt_rs)) {
+							?>
+					<tr>
+							
+									  <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $m; ?></div></td>								
+									  <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $row["company_name"]; ?></div></td>
+									  <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $row["Campaing_Details"]; ?></div></td>
+									 
+									   <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $row["Media_Type"]; ?></div></td>
+									   <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $row["Total_No_of_Vehicles"]; ?></div></td>
+									   <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $row["status"]; ?></div></td>
+									   
+									</tr>
+									<?php 
+								$m++;}
+							?>
+							 </tbody>
+                  </table>		
+				  
+				  <?php echo "**"; ?>
+				  
+				  <table class="table m-0 tableFixHead" id="pending_sales">
+                    <thead>
+                    <tr>
+                     <th>Sr.No.</th>
+                      <th>Company Name</th>
+                      <th>Campaing Details</th>
+					  <th>Media Type</th> 					  
+					   <th>Total No of Vehicles</th> 
+					   <th>Status</th>
+					  
+                    </tr>
+                    </thead>
+                    <tbody> 
+					<?php 
+						
+										
+						$stmt_select = "SELECT * from order_details where sales_person='$loginUser' AND status='NEW'";
+						
+                        $rslt_rs = mysqli_query($conn, $stmt_select);
+
+                        $n = 1;
+                        while ($row = mysqli_fetch_assoc($rslt_rs)) {
+							?>
+					<tr>
+							
+									  <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $m; ?></div></td>								
+									  <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $row["company_name"]; ?></div></td>
+									  <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $row["Campaing_Details"]; ?></div></td>
+									 
+									   <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $row["Media_Type"]; ?></div></td>
+									   <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $row["Total_No_of_Vehicles"]; ?></div></td>
+									   <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $row["status"]; ?></div></td>
+									   
+									</tr>
+									<?php 
+								$n++;}
+							?>
+							 </tbody>
+                  </table>	
+				  
+				  <?php echo "**"; ?>
+				  
+				  <table class="table m-0 tableFixHead" id="rejected_sales">
+                    <thead>
+                    <tr>
+                     <th>Sr.No.</th>
+                      <th>Company Name</th>
+                      <th>Campaing Details</th>
+					  <th>Media Type</th> 					  
+					   <th>Total No of Vehicles</th> 
+					   <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody> 
+					<?php 
+						
+										
+						$stmt_select = "SELECT * from order_details where sales_person='$loginUser' AND status='Rejected'";
+                        $rslt_rs = mysqli_query($conn, $stmt_select);
+
+                        $x = 1;
+                        while ($row = mysqli_fetch_assoc($rslt_rs)) {
+							?>
+					<tr>
+							
+									  <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $m; ?></div></td>								
+									 <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $row["company_name"]; ?></div></td>
+									  <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $row["Campaing_Details"]; ?></div></td>
+									 
+									   <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $row["Media_Type"]; ?></div></td>
+									   <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $row["Total_No_of_Vehicles"]; ?></div></td>
+									   <td><div class="sparkbar" data-color="#00a65a" data-height="20"><?php echo $row["status"]; ?></div></td>
+									   
+									
+									</tr>
+									<?php 
+								$x++;}
+							?>
+							 </tbody>
+                  </table>		
+				  
+				  
+ <?php
+}
+ ?>
